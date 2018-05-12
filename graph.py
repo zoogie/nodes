@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import struct,sys
 
-dotsize=0.5
-linesize=0.25
+dotsize=0.25
+linesize=0.1
 
 f=open("lfcs.dat","rb")
 buf=f.read()
@@ -43,7 +43,7 @@ def to_hex(x, pos):
     return '%X' % int(x)
 fmt = ticker.FuncFormatter(to_hex)
 #greets to rubbleF15 for py3 hex ticker fix https://stackoverflow.com/questions/21189806/hexadecimal-x-axis-in-matplotlib
-	
+print(max(ftune),min(ftune_new))
 def graph():
 	plt.figure(figsize=(14,5))
 	plt.suptitle(title)
@@ -57,6 +57,7 @@ def graph():
 	plt.xlabel('LFCS')
 	plt.ylabel('msed3 error')
 	plt.text(0x4E00000,50,"msed3=LFCS/5",fontsize=8)
+	
 
 graph()
 plt.show()
