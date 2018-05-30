@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-import struct,sys
+import struct,sys,binascii
 
 dotsize=0.25
 linesize=0.1
@@ -43,9 +43,14 @@ def to_hex(x, pos):
     return '%X' % int(x)
 fmt = ticker.FuncFormatter(to_hex)
 #greets to rubbleF15 for py3 hex ticker fix https://stackoverflow.com/questions/21189806/hexadecimal-x-axis-in-matplotlib
-print(max(ftune),min(ftune_new))
-def graph():
-	plt.figure(figsize=(14,5))
+outstr=b"ymin:%d ymax:%d\nold3ds xmin:0x%X xmax:0x%X\nnew3ds xmin:0x%X xmax:0x%X" % (min(ftune_new),max(ftune),lfcs[1],max(lfcs),lfcs_new[1],max(lfcs_new))
+print(outstr)
+crc=binascii.crc32(outstr)
+print("data crc32 %08X" % crc)
+if(crc != 0x7E8598B0):
+	print("DATA HAS CHANGED!!\n"*20)
+def graph(w,h):
+	plt.figure(figsize=(w,h))
 	plt.suptitle(title)
 	axes = plt.gca()
 	#axes.get_xaxis().set_major_locator(ticker.MultipleLocator(1))
@@ -59,7 +64,7 @@ def graph():
 	plt.text(0x4E00000,50,"msed3=LFCS/5",fontsize=8)
 	
 
-graph()
+graph(14,5)
 plt.show()
-graph() #bug workaround - savefig will remove the toolbar from view if used before show()
+graph(40,10) #bug workaround - savefig will remove the toolbar from view if used before show()
 plt.savefig("msed_data_%08d.png" % tot)
