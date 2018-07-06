@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import struct,sys,binascii
 
-dotsize=0.25
+dotsize=0.5
 linesize=0.1
 
 f=open("lfcs.dat","rb")
@@ -66,5 +66,5 @@ def graph(w,h):
 
 graph(14,5)
 plt.show()
-graph(40,10) #bug workaround - savefig will remove the toolbar from view if used before show()
+graph(160,40) #bug workaround - savefig will remove the toolbar from view if used before show()
 plt.savefig("msed_data_%08d.png" % tot)
